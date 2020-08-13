@@ -7,29 +7,31 @@ class Solution:
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
         head = None
         last = None
-        while l1 is not None and l2 is not None:
-            val_1 = l1.val
-            val_2 = l2.val
-            now = ListNode(0)
-            now.val = val_1 + val_2
+        ctr = 0
+        while l1 is not None or l2 is not None:
+            if l1 is None:
+                val_1 = 0
+            else:
+                val_1 = l1.val
+                l1 = l1.next
+                
+            if l2 is None:
+                val_2 = 0
+            else:
+                val_2 = l2.val
+                l2 = l2.next
+                
+            tmp = val_1 + val_2 + ctr
+            now = ListNode(tmp % 10)
+            ctr = tmp // 10
+            
             if last is None:
                 head = now
             else:
                 last.next = now
             last = now
-            l1 = l1.next
-            l2 = l2.next
-        if l1 is not None:
-            if last is not None:
-                last.next = l1
-            else:
-                head = l1
-        if l2 is not None:
-            if last is not None:
-                last.next = l2
-            else:
-                head = l2
-                
-    return head
-            
+        if ctr == 1:
+            now = ListNode(1)
+            last.next = now
+        return head
       
